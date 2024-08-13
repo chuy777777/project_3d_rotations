@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  app:
+    build: 
+      dockerfile: app_docker/Dockerfile
+      context: ../
+    image: chuy777/project_3d_rotations:v1
+    container_name: project_3d_rotations
+    env_file: ./../app/.env
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DISPLAY=$DISPLAY
+    privileged: true
+    volumes:
+      - volume_project_3d_rotations:/app
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro    # UI
+      # - /dev:/dev:ro                        # USB Devices
+    # ports:
+    #   - 5000:5000
+    networks:
+      - network_project_3d_rotations
+
+volumes:
+  volume_project_3d_rotations:
+    name: volume_project_3d_rotations
+    external: false
+
+networks:
+  network_project_3d_rotations:
+    name: network_project_3d_rotations
+    external: true
